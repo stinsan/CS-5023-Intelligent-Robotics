@@ -26,6 +26,7 @@ The chosen KR must have a balance of both **epistemological adequacy** and **com
 for understanding conceptually and mathematically general relational languages.
 
 This is an example of an ad-hoc FOPL language about a robot traversing an office building:
+
 ![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/001.PNG)
 
 Below are the variables:
@@ -61,5 +62,25 @@ may differ considerably in likelihood, which is where probabilistic reasoning co
 There are two popular and powerful probablistic knowledge representations: Bayesian networks (BNs) and Markov decision processes (MDPs).
 
 #### Bayesian Networks
+Inference in Bayesian probablity means to infer the probablility of some event of interest, given other prior probabilities that are dependent. 
 
+**Problem**: For a potential cause _C_ and an observed effect _E_: given prior probabilities _P(C)_ and _P(E)_ and the conditional probability _P(E|C)_, determine the posterior _P(C|E)_. 
+
+**Solution**: Bayes' Rule defined as
+
+![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/002.PNG)
+
+However, if there are many effects observed (_E_<sub>1</sub> , ..., _E_<sub>n</sub>), it's extremely difficult to specify all of the conditional probabilities involved. This is where Bayesian networks (BNs) come in.
+
+The main idea of **Bayesian networks** is to represent the random variables as nodes in a directed acyclic graph, where a node is directly preceded by a set of parent nodes iff it is directly conditionally dependent on the corresponding parent variables.
+
+![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/003.PNG)
+
+A BN can be interpreted in both directions, bottom-up and top-down. When lookign at a BN bottom-up, we can explain the event using the conditional probabilities (diagnosis).
+When looking at a BN top-down, we can propegate evidence to compute the probability of an event happening (causation).
+
+For systems evolving over time, for which the Markov property holds (meaning that future states are not dependent on the past, only the present), a BN takes on a specific form: a **dynamic Bayesian network** (DBN).
  
+ ![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/004.PNG)
+ 
+ The variables in a new state correspond to a BN slice (i.e. what's shown in Figure 14.1) and whose nodes depend only on each other and on nodes in the previous state.
