@@ -84,3 +84,40 @@ For systems evolving over time, for which the Markov property holds (meaning tha
  ![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/004.PNG)
  
  The variables in a new state correspond to a BN slice (i.e. what's shown in Figure 14.1) and whose nodes depend only on each other and on nodes in the previous state.
+ 
+ #### Markov Decision Processes
+ In order to cope with uncertainties in the environment, Markov decision processes (MDPs) and, in the case of partial observability of the environment, partially observable Markov decision processes (POMDPs) are used.
+ 
+ **Formal Definition**: an MDP is formally defined by a four-tuple <_S_, _A_, _T_, _R_>.
+ | Variable | Definition |
+ | -------- | ---------- |
+ | _S_ | finite set of states |
+ | _A_ | finite set of actions |
+ | _T_ : _S_ x _A_ ⭢ _S_ | transition function defining the probability of state change upon application of a given action at time _t_<br> T(s, a, s') = Pr{s<sub>t+1</sub> = s' &#124; s<sub>t</sub> = s, a<sub>t</sub> = a} 
+ | _R_(_s_, _a_), _R_ : _S_ x _A_ ⭢ 𝕽 | reward received by the robot after acheieving action _a_ leading to state _s_ |
+ 
+ Below is an example of an MDP:
+  ![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/005.PNG)
+ 
+ Solving an MDP is an optimization problem where we want the sum of the expected rewards, called **utility**, to be maximized. There are two ways to solve an MDP:
+ - value iteration
+ - policy iteration
+ 
+ In **value iteration** we want to compute all utilities _U(s)_ of all states first, then compute 𝜋<sup>*</sup>(_s_) which provides the optimal action for each state. To compute the utilities, we use the Bellman equation
+ ![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/006.PNG)
+where 0 < 𝛾 < 1 is a discount factor. After computing utilities, the optimal policy is the one that provides the best action for each state. So, the result of the MDP is the best local decision.
+
+In **policy iteration**, we start with an initial, random policy 𝜋. Then, we try to improve it gradually using an iterative algorithm that looks at actions that augment utility.
+
+#### Partially Observable Markov Decision Processes
+**Formal Definition**: A POMDP is a six-tuple <_S_, _A_, _T_, _R_, 𝛺, _O_>. The variables _S_, _A_, _T_, _R_ are the same as a MDP. The variables 𝛺 and _O_ are defined below:
+ | Variable | Definition |
+ | -------- | ---------- |
+ | 𝛺 | finite set of observations _o_ |
+ | _O_ : _S_ x _A_ ⭢ 𝛺 | the observation model _O(s', a, o)_ that provides the probability to obtain observation _o_ after action _a_ which has lead to state _s'_ |
+ 
+ The **robot belief state** is all the probabilities of being in all the states. The belief to be in a given state is noted as _b(s)_. The belief is update after an action and observation by
+ ![](https://github.com/stinsan/CS-5023-Intelligent-Robotics/blob/master/Screenshots/007.PNG)
+ where 𝛼 is a normalization constant.
+ 
+ ## 14.3. Reasoning and Decision Making
